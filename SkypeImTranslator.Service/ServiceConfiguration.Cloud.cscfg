@@ -5,6 +5,7 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="SkypeIm.Translator.WebRole.TranslationKey" value="-replace-with-the-key-" />
+      <Setting name="SkypeIm.Translator.WebRole.TranslatorUri" value="https://api.cognitive.microsofttranslator.com/translate" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

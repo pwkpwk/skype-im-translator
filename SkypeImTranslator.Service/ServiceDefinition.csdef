@@ -11,6 +11,7 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="SkypeIm.Translator.WebRole.TranslationKey" />
+      <Setting name="SkypeIm.Translator.WebRole.TranslatorUri" />
     </ConfigurationSettings>
     <Endpoints>
       <InputEndpoint name="HttpInput" protocol="http" port="80" />

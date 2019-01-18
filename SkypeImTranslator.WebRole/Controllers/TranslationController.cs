@@ -4,11 +4,9 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Net;
     using System.Net.Http;
-    using System.Net.Http.Headers;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -44,9 +42,8 @@
             {
                 query.AppendFormat("&to={0}", locale);
             }
-            UriBuilder ub = new UriBuilder("https", "api.cognitive.microsofttranslator.com")
+            UriBuilder ub = new UriBuilder(RoleEnvironment.GetConfigurationSettingValue("SkypeIm.Translator.WebRole.TranslatorUri"))
             {
-                Path = "translate",
                 Query = query.ToString()
             };
 
@@ -67,8 +64,22 @@
                 {
                     HttpResponseMessage response = Request.CreateResponse();
 
-                    response.Content = new StreamContent(await translationResponse.Content.ReadAsStreamAsync());
-                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    using (JsonReader reader = new JsonTextReader(new StreamReader(await translationResponse.Content.ReadAsStreamAsync(), Encoding.UTF8)))
+                    {
+                        JToken jt = JToken.ReadFrom(reader);
+                        JArray translations = jt.Value<JArray>("translations");
+                        JArray responsePayload = new JArray();
+
+                        foreach (JToken translation in translations)
+                        {
+                            responsePayload.Add(
+                                new JObject(
+                                    new JProperty("locale", translation.Value<string>("to"),
+                                    new JProperty("text", translation.Value<string>("text")))));
+                        }
+
+                        response.Content = new StringContent(responsePayload.ToString(), Encoding.UTF8, "application/json");
+                    }
 
                     return response;
                 }
