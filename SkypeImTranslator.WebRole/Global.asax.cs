@@ -1,6 +1,7 @@
 ﻿namespace SkypeImTranslator.WebRole
 {
     using System;
+    using System.Net.Http;
     using System.Web;
     using System.Web.Http;
     using Unity;
@@ -26,6 +27,8 @@
         private static IUnityContainer RegisterDependencies()
         {
             IUnityContainer container = new UnityContainer();
+
+            container.RegisterInstance<HttpClient>(new HttpClient(), new Unity.Lifetime.ContainerControlledLifetimeManager());
 
             return container;
         }

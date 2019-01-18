@@ -4,15 +4,16 @@
     <Sites>
       <Site name="Web">
         <Bindings>
-          <Binding name="Endpoint1" endpointName="Endpoint1" />
+          <Binding name="HttpInput" endpointName="HttpInput" />
         </Bindings>
       </Site>
     </Sites>
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="SkypeIm.Translator.WebRole.TranslationKey" />
     </ConfigurationSettings>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InputEndpoint name="HttpInput" protocol="http" port="80" />
     </Endpoints>
   </WebRole>
 </ServiceDefinition>
